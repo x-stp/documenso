@@ -33,13 +33,11 @@ export const FolderCard = ({
   return (
     <div
       key={folder.id}
-      className="border-border hover:border-muted-foreground/40 group relative flex flex-col rounded-lg border p-4 transition-all hover:shadow-sm"
+      className="border-border hover:border-muted-foreground/40 group relative flex flex-col rounded-lg border p-4 transition-all hover:cursor-pointer hover:shadow-sm"
+      onClick={() => onNavigate(folder.id)}
     >
       <div className="flex items-start justify-between">
-        <button
-          className="flex items-center space-x-2 text-left"
-          onClick={() => onNavigate(folder.id)}
-        >
+        <button className="flex items-center space-x-2 text-left">
           <FolderIcon className="text-documenso h-6 w-6" />
           <div>
             <div className="flex items-center gap-2">
