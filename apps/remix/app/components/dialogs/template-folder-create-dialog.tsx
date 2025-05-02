@@ -11,7 +11,6 @@ import { z } from 'zod';
 
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { FolderType } from '@documenso/lib/types/folder-type';
-import { formatTemplatesPath } from '@documenso/lib/utils/teams';
 import { trpc } from '@documenso/trpc/react';
 import { Button } from '@documenso/ui/primitives/button';
 import {
@@ -80,10 +79,6 @@ export const TemplateFolderCreateDialog = ({
       toast({
         description: _(msg`Folder created successfully`),
       });
-
-      const templatesPath = formatTemplatesPath(team?.url);
-
-      void navigate(`${templatesPath}/f/${newFolder.id}`);
     } catch (err) {
       const error = AppError.parseError(err);
 

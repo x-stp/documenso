@@ -12,7 +12,6 @@ import { z } from 'zod';
 
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { FolderType } from '@documenso/lib/types/folder-type';
-import { formatTemplatesPath } from '@documenso/lib/utils/teams';
 import { trpc } from '@documenso/trpc/react';
 import { Button } from '@documenso/ui/primitives/button';
 import {
@@ -103,14 +102,6 @@ export function TemplateMoveToFolderDialog({
       });
 
       onOpenChange(false);
-
-      const templatesPath = formatTemplatesPath(team?.url);
-
-      if (data.folderId) {
-        void navigate(`${templatesPath}/f/${data.folderId}`);
-      } else {
-        void navigate(templatesPath);
-      }
     } catch (err) {
       const error = AppError.parseError(err);
 
@@ -171,7 +162,7 @@ export function TemplateMoveToFolderDialog({
                             disabled={currentFolderId === null}
                           >
                             <HomeIcon className="mr-2 h-4 w-4" />
-                            <Trans>Root (No Folder)</Trans>
+                            <Trans>Home (No Folder)</Trans>
                           </Button>
 
                           {folders?.data?.map((folder) => (

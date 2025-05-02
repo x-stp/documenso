@@ -155,7 +155,7 @@ export const DocumentMoveToFolderDialog = ({
                             disabled={currentFolderId === null}
                           >
                             <HomeIcon className="mr-2 h-4 w-4" />
-                            <Trans>Root (No Folder)</Trans>
+                            <Trans>Home (No Folder)</Trans>
                           </Button>
 
                           {folders?.data.map((folder) => (

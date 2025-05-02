@@ -130,7 +130,7 @@ export const TemplateFolderMoveDialog = ({
                         onClick={() => field.onChange(undefined)}
                       >
                         <HomeIcon className="mr-2 h-4 w-4" />
-                        Root
+                        Home
                       </Button>
 
                       {filteredFolders &&
