@@ -7,12 +7,10 @@ import { Trans } from '@lingui/react/macro';
 import type * as DialogPrimitive from '@radix-ui/react-dialog';
 import { FolderIcon, HomeIcon, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
 import { z } from 'zod';
 
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { FolderType } from '@documenso/lib/types/folder-type';
-import { formatDocumentsPath } from '@documenso/lib/utils/teams';
 import { trpc } from '@documenso/trpc/react';
 import { Button } from '@documenso/ui/primitives/button';
 import {
@@ -32,8 +30,6 @@ import {
   FormMessage,
 } from '@documenso/ui/primitives/form/form';
 import { useToast } from '@documenso/ui/primitives/use-toast';
-
-import { useOptionalCurrentTeam } from '~/providers/team';
 
 export type DocumentMoveToFolderDialogProps = {
   documentId: number;
@@ -57,8 +53,6 @@ export const DocumentMoveToFolderDialog = ({
 }: DocumentMoveToFolderDialogProps) => {
   const { _ } = useLingui();
   const { toast } = useToast();
-  const navigate = useNavigate();
-  const team = useOptionalCurrentTeam();
 
   const form = useForm<TMoveDocumentFormSchema>({
     resolver: zodResolver(ZMoveDocumentFormSchema),
@@ -101,14 +95,6 @@ export const DocumentMoveToFolderDialog = ({
       });
 
       onOpenChange(false);
-
-      const documentsPath = formatDocumentsPath(team?.url);
-
-      if (data.folderId) {
-        void navigate(`${documentsPath}/f/${data.folderId}`);
-      } else {
-        void navigate(documentsPath);
-      }
     } catch (err) {
       const error = AppError.parseError(err);
 
