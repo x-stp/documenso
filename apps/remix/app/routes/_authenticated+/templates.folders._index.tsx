@@ -86,6 +86,10 @@ export default function TemplatesFoldersPage() {
         />
       </div>
 
+      <h1 className="mt-4 truncate text-2xl font-semibold md:text-3xl">
+        <Trans>All Folders</Trans>
+      </h1>
+
       {isFoldersLoading ? (
         <div className="mt-6 flex justify-center">
           <Loader2 className="text-muted-foreground h-8 w-8 animate-spin" />
@@ -125,10 +129,6 @@ export default function TemplatesFoldersPage() {
           )}
 
           <div className="">
-            <h1 className="truncate text-2xl font-semibold md:text-3xl">
-              <Trans>All Folders</Trans>
-            </h1>
-
             {searchTerm && foldersData?.folders.filter(isFolderMatchingSearch).length === 0 && (
               <div className="text-muted-foreground mt-6 text-center">
                 <Trans>No folders found matching "{searchTerm}"</Trans>
