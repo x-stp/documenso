@@ -53,6 +53,9 @@ export default function DocumentsFoldersPage() {
     }
   };
 
+  const isFolderMatchingSearch = (folder: TFolderWithSubfolders) =>
+    folder.name.toLowerCase().includes(searchTerm.toLowerCase());
+
   return (
     <div className="mx-auto w-full max-w-screen-xl px-4 md:px-8">
       <div className="flex w-full items-center justify-between">
@@ -90,16 +93,12 @@ export default function DocumentsFoldersPage() {
       ) : (
         <>
           {foldersData?.folders?.some(
-            (folder) =>
-              folder.pinned && folder.name.toLowerCase().includes(searchTerm.toLowerCase()),
+            (folder) => folder.pinned && isFolderMatchingSearch(folder),
           ) && (
             <div className="mt-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {foldersData.folders
-                  .filter(
-                    (folder) =>
-                      folder.pinned && folder.name.toLowerCase().includes(searchTerm.toLowerCase()),
-                  )
+                  .filter((folder) => folder.pinned && isFolderMatchingSearch(folder))
                   .map((folder) => (
                     <FolderCard
                       key={folder.id}
@@ -130,21 +129,15 @@ export default function DocumentsFoldersPage() {
               <Trans>All Folders</Trans>
             </h1>
 
-            {searchTerm &&
-              foldersData?.folders.filter((folder) =>
-                folder.name.toLowerCase().includes(searchTerm.toLowerCase()),
-              ).length === 0 && (
-                <div className="text-muted-foreground mt-6 text-center">
-                  <Trans>No folders found matching "{searchTerm}"</Trans>
-                </div>
-              )}
+            {searchTerm && foldersData?.folders.filter(isFolderMatchingSearch).length === 0 && (
+              <div className="text-muted-foreground mt-6 text-center">
+                <Trans>No folders found matching "{searchTerm}"</Trans>
+              </div>
+            )}
 
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {foldersData?.folders
-                .filter(
-                  (folder) =>
-                    !folder.pinned && folder.name.toLowerCase().includes(searchTerm.toLowerCase()),
-                )
+                .filter((folder) => !folder.pinned && isFolderMatchingSearch(folder))
                 .map((folder) => (
                   <FolderCard
                     key={folder.id}

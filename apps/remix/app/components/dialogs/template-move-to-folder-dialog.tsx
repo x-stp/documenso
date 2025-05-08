@@ -121,6 +121,10 @@ export function TemplateMoveToFolderDialog({
     }
   };
 
+  const filteredFolders = folders?.data?.filter((folder) =>
+    folder.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   return (
     <Dialog {...props} open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -174,32 +178,25 @@ export function TemplateMoveToFolderDialog({
                             <Trans>Home (No Folder)</Trans>
                           </Button>
 
-                          {folders?.data
-                            ?.filter((folder) =>
-                              folder.name.toLowerCase().includes(searchTerm.toLowerCase()),
-                            )
-                            .map((folder) => (
-                              <Button
-                                key={folder.id}
-                                type="button"
-                                variant={field.value === folder.id ? 'default' : 'outline'}
-                                className="w-full justify-start"
-                                onClick={() => field.onChange(folder.id)}
-                                disabled={currentFolderId === folder.id}
-                              >
-                                <FolderIcon className="mr-2 h-4 w-4" />
-                                {folder.name}
-                              </Button>
-                            ))}
+                          {filteredFolders?.map((folder) => (
+                            <Button
+                              key={folder.id}
+                              type="button"
+                              variant={field.value === folder.id ? 'default' : 'outline'}
+                              className="w-full justify-start"
+                              onClick={() => field.onChange(folder.id)}
+                              disabled={currentFolderId === folder.id}
+                            >
+                              <FolderIcon className="mr-2 h-4 w-4" />
+                              {folder.name}
+                            </Button>
+                          ))}
 
-                          {searchTerm &&
-                            folders?.data?.filter((folder) =>
-                              folder.name.toLowerCase().includes(searchTerm.toLowerCase()),
-                            ).length === 0 && (
-                              <div className="text-muted-foreground px-2 py-2 text-center text-sm">
-                                <Trans>No folders found</Trans>
-                              </div>
-                            )}
+                          {searchTerm && filteredFolders?.length === 0 && (
+                            <div className="text-muted-foreground px-2 py-2 text-center text-sm">
+                              <Trans>No folders found</Trans>
+                            </div>
+                          )}
                         </>
                       )}
                     </div>

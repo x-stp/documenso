@@ -61,7 +61,7 @@ export const CreateFolderDialog = ({ trigger, ...props }: CreateFolderDialogProp
 
   const onSubmit = async (data: TCreateFolderFormSchema) => {
     try {
-      const newFolder = await createFolder({
+      await createFolder({
         name: data.name,
         parentId: folderId,
         type: FolderType.DOCUMENT,
